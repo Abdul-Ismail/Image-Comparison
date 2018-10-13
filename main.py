@@ -5,8 +5,8 @@ import numpy as np
 
 i = cv2.imread('./assets/processedImages/image1-backgroundRemoved-mean-neightbours-removed.jpg')
 i2 = cv2.imread('./assets/processedImages/image2-backgroundRemoved-mean-neightbours-removed.jpg')
-PCB1 = cv2.imread('./assets/image1.jpg')
-PCB2 = cv2.imread('./assets/image2.jpg')
+PCB1 = cv2.imread('./assets/PCB 1.jpg')
+PCB2 = cv2.imread('./assets/PCB 2.jpg')
 
 
 
@@ -129,8 +129,8 @@ def getROIOfImageWithBackgroundRemoved(image, drawCircle):
 cords1, img1 = getROIOfImageWithBackgroundRemoved(i, True)
 cords2, img2 = getROIOfImageWithBackgroundRemoved(i2, True)
 
-PCB1_flashed_removed = removeFlash.remove(PCB1, 5, 'mean')
-PCB2_flashed_removed = removeFlash.remove(PCB2, 5, 'mean')
+PCB1_flashed_removed = removeFlash.remove(PCB1, 5, 'avg')
+PCB2_flashed_removed = removeFlash.remove(PCB2, 5, 'avg')
 
 print(cords1)
 cv2.imshow("1", PCB1_flashed_removed[1][cords1['top'][0]:cords1['bottom'][0], cords1['left'][1] : cords1['right'][1]])
