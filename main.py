@@ -20,8 +20,6 @@ PCB2 = cv2.imread('./assets/PCB 2.jpg')
 # cv2.imshow("adaptiveThreshold", adaptiveThreshold)
 
 
-
-
 # flashless = removeFlash.remove(i2, 5, 'mean')
 # backgroundClearedImage = removeBackground.removedBasedOnPixels(flashless[1])
 # backgroundClearedImage = removeBackground.removeSinglePixelsWithWhiteNeighbours(backgroundClearedImage, 5)
