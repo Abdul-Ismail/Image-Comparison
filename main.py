@@ -136,6 +136,9 @@ print(cords1)
 cv2.imshow("1", PCB1_flashed_removed[1][cords1['top'][0]:cords1['bottom'][0], cords1['left'][1] : cords1['right'][1]])
 cv2.imshow("2", PCB2_flashed_removed[1][cords1['top'][0]:cords2['bottom'][0], cords2['left'][1] : cords2['right'][1]])
 
+cv2.imshow("1", PCB1_flashed_removed[1][cords1['top'][0]:cords1['bottom'][0], cords1['left'][1] : cords1['right'][1]])
+cv2.imshow("2", PCB2_flashed_removed[1][cords1['top'][0]:cords2['bottom'][0], cords2['left'][1] : cords2['right'][1]])
+
 # adaptiveThreshold = cv2.adaptiveThreshold(cv2.cvtColor(backgroundClearedImage, cv2.COLOR_BGR2GRAY), 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 5, 10)
 # cv2.imshow("adaptiveThreshold", adaptiveThreshold)
 
