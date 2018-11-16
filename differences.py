@@ -1,6 +1,24 @@
 import cv2
 import numpy as np
 
+
+'''
+Will return the number of pixels for a region of color
+@lower_region: Lower region of pixel
+@upper_region: Upper region of pixel
+@img: image being compared
+@x: current x position of region
+@y: current y position of region
+@region_width: The height of the region
+@region_height: The width of the region
+@return: returns the count for the region
+'''
+def get_region_color_count_for_specific_region(img, x, y, region_width, region_height, lower_region, upper_region):
+    roi = img[y:y + region_height, x:x + region_width]
+    inRange_of_lower_and_ipper = cv2.inRange(roi, lower_region, upper_region)
+    return np.count_nonzero(inRange_of_lower_and_ipper == 255)
+
+
 '''
 for each region get number of values for each region color
 '''
@@ -14,19 +32,13 @@ def map_colors(img, region_width, region_height):
     #loop though the image by regions
     for y in range(1, height - region_height, region_height):
         for x in range(1, width - region_width, region_width):
-            roi = img[y:y + region_height, x:x + region_width]
-            black_region = cv2.inRange(roi, (0, 0, 0), (360, 100, 40))
-            black_count = np.count_nonzero(black_region == 255)
-
-
             region_pixel_map.append({
                 'cords': {
                     'x': x,
                     'y': y
                 },
                 'map': {
-                    'black': black_count
-
+                    'black': get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (0, 0, 0), (360, 100, 40))
                 }
             })
 
