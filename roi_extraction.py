@@ -1,10 +1,6 @@
 import cv2
 import numpy as np
 
-image1 = cv2.imread('./assets/PCB 1.JPG')
-image2 = cv2.imread('./assets/PCB 2.JPG')
-
-
 def splitYUV(img):
     YUV = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
     y, u, v = cv2.split(YUV)
@@ -85,40 +81,10 @@ def scaleImage(img, img2):
     return cv2.resize(img2, dsize=(width, height))
 
 
-def get_roi_crop_original():
-    v1 = splitYUV(image1.copy())
-    v2 = splitYUV(image2.copy())
-
-    bottom1, top1, left1, right1 = cropImage(v1)
-    bottom2, top2, left2, right2 = cropImage(v2)
-
-    image1_cropped = image1[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
-    image2_cropped = image2[bottom2 - 50:top2 + 50, left2 - 50:right2 + 50]
-
-    cv2.imshow('cropped1', image1_cropped)
-    cv2.imshow('cropped2', image2_cropped)
-
-    cv2.imwrite('./assets/PCB1_cropped.jpg', image1_cropped)
-    cv2.imwrite('./assets/PCB2_cropped.jpg', image2_cropped)
-
-
 def crop_roi(img):
     img = img.copy()
     v = splitYUV(img.copy())
     bottom1, top1, left1, right1 = cropImage(v)
-    image1_cropped = image1[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
+    image1_cropped = img[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
     return image1_cropped
 
-
-    # cl1 = removeFlash(crop1)
-    # cl2 = removeFlash(crop2)
-
-# get_roi_crop_original()
-
-# cv2.imshow('v', v2)
-# cv2.imshow('u', u)
-
-# while True:
-#     if cv2.waitKey(33) == ord('q'):
-#         cv2.destroyAllWindows()
-#         exit()
