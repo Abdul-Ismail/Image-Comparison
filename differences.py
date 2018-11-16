@@ -5,7 +5,7 @@ image1 = cv2.imread('./assets/PCB1_cropped.JPG')
 image2 = cv2.imread('./assets/PCB2_cropped.JPG')
 
 '''
-
+for each region get number of values for each region color
 '''
 def map_colors(img, region_width, region_height):
     region_pixel_map = []
@@ -21,7 +21,6 @@ def map_colors(img, region_width, region_height):
             black_region = cv2.inRange(roi, (0, 0, 0), (360, 100, 40))
             black_count = np.count_nonzero(black_region == 255)
 
-            # print(black_region.size)
 
             region_pixel_map.append({
                 'cords': {
@@ -48,6 +47,10 @@ def get_change(current, previous):
     return (100 / total) * diff
 
 
+'''
+Compare the given regions mapped to pixel color count
+if there sa certain percentage change between the two images, we can assume it is different
+'''
 def compare_regions(region_data1, region_data2):
     region_pixels_with_significant_changes = []
 
@@ -61,6 +64,9 @@ def compare_regions(region_data1, region_data2):
     return region_pixels_with_significant_changes
 
 
+'''
+highlight cords for given list of x and y and the region width and height
+'''
 def highlight_areas_for_given_cords(cords, region_width, region_height):
     img1 = image1.copy()
     img2 = image2.copy()
@@ -73,6 +79,9 @@ def highlight_areas_for_given_cords(cords, region_width, region_height):
     return img1, img2
 
 
+'''
+call all the sequences above
+'''
 def highligh_differences(img1, img2, region_width, region_height):
     data = map_colors(image1, region_width, region_height)
     data2 = map_colors(image2, region_width, region_height)
@@ -85,11 +94,6 @@ def highligh_differences(img1, img2, region_width, region_height):
 # img1, img2 = highligh_differences(image1, image2, 120, 120)
 # cv2.imshow('img1', img1)
 # cv2.imshow('img2', img2)
-
-# cv2.imshow('cv2.COLOR_BGR2HSV', cv2.cvtColor(image1, cv2.COLOR_BGR2HSV))
-# cv2.imshow('cv2.COLOR_BGR2HSV2', cv2.cvtColor(image2, cv2.COLOR_BGR2HSV))
-# cv2.imshow('v', v2)
-# cv2.imshow('u', u)
 
 # while True:
 #     if cv2.waitKey(33) == ord('q'):
