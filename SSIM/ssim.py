@@ -3,11 +3,14 @@ from skimage.measure import compare_ssim
 import argparse
 import imutils
 import cv2
-
+import easygui
 
 # load the two input images
-imageA = cv2.imread("PCB 1.jpg")
-imageB = cv2.imread("PCB 2.jpg")
+img1 = easygui.fileopenbox()
+img2 = easygui.fileopenbox()
+
+imageA = cv2.imread(img1)
+imageB = cv2.imread(img2)
 
 # convert the images to grayscale
 grayA = cv2.cvtColor(imageA, cv2.COLOR_BGR2GRAY)
