@@ -80,7 +80,7 @@ def remove(passedImage, amountOftimestoRemove, calculationType):
         img = averagedImg
         if (i != amountOftimestoRemove - 1): img1 = orignal
 
-    return [img1, averagedImg]
+    return img1, averagedImg
 
 
 def smoothImage(passedImage, amountOftimestoCalculate, calculationType):

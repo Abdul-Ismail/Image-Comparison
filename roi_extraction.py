@@ -74,17 +74,28 @@ def compare(img1, img2):
     return img1
 
 
-def scaleImage(img, img2):
-    height = img.shape[0]
-    width = img.shape[1]
+def scaleImage(img):
+    image2 = cv2.imread('./assets/PCB 2.JPG')
+    height = image2.shape[0]
+    width = image2.shape[1]
 
-    return cv2.resize(img2, dsize=(width, height))
+    return cv2.resize(img, dsize=(width, height))
 
 
 def crop_roi(img):
     img = img.copy()
     v = splitYUV(img.copy())
+    V = removeFlash(v)
     bottom1, top1, left1, right1 = cropImage(v)
     image1_cropped = img[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
     return image1_cropped
 
+
+def crop_roi_flash_removed(img):
+    img1 = img.copy()
+    scaled = scaleImage(img1)
+    v = splitYUV(scaled)
+    cl = removeFlash(v)
+    bottom1, top1, left1, right1 = cropImage(cl)
+    cl_cropped = cl[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
+    return cl_cropped

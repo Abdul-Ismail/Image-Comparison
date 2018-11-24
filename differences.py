@@ -16,7 +16,9 @@ Will return the number of pixels for a region of color
 def get_region_color_count_for_specific_region(img, x, y, region_width, region_height, lower_region, upper_region):
     roi = img[y:y + region_height, x:x + region_width]
     inRange_of_lower_and_ipper = cv2.inRange(roi, lower_region, upper_region)
-    return np.count_nonzero(inRange_of_lower_and_ipper == 255)
+    pixelCount = np.count_nonzero(inRange_of_lower_and_ipper == 255)
+    # print(pixelCount)
+    return pixelCount
 
 
 '''
@@ -38,10 +40,11 @@ def map_colors(img, region_width, region_height):
                     'y': y
                 },
                 'map': {
-                    'black': get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (0, 0, 0), (360, 100, 40))
+                    'black': get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (95, 0, 0), (97, 255, 255))
                 }
             })
 
+    print(region_pixel_map)
     return region_pixel_map
 
 '''
@@ -80,8 +83,6 @@ def map_colors_grey_scale(img, region_width, region_height):
             #     }
             # })
 
-
-
     return region_pixel_map
 
 '''
@@ -105,9 +106,10 @@ def compare_regions(region_data1, region_data2, percetange_difference_allowed):
 
     for i in range(len(region_data1)):
         percentage_change_black = get_change(region_data1[i]['map']['black'], region_data2[i]['map']['black'] )
-        # print(percentage_change_black)
 
-        if (percentage_change_black > percetange_difference_allowed):
+        print(region_data1[i]['map']['black'], region_data2[i]['map']['black'],percentage_change_black)
+
+        if (percentage_change_black > percetange_difference_allowed and (region_data1[i]['map']['black'] > 100 or region_data2[i]['map']['black'] > 100)):
             region_pixels_with_significant_changes.append(region_data1[i]['cords'])
 
     return region_pixels_with_significant_changes
