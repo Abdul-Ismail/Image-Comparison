@@ -4,10 +4,8 @@ import cv2
 import numpy as np
 import removeFlash
 
-
 image1 = cv2.imread('./assets/PCB 1.jpg')
 image2 = cv2.imread('./assets/PCB 2.jpg')
-
 
 # red, image1 = removeFlash.remove(image1, 5, 'avg')
 # red, image2 = removeFlash.remove(image2, 5, 'avg')
@@ -22,8 +20,6 @@ cv2.imshow('image2_roi', image2_roi)
 
 cv2.imshow('image1_roi_hi', highlighted_difference_image1)
 cv2.imshow('image2_roi_hi', highlighted_difference_image2)
-
-
 
 while True:
     if cv2.waitKey(33) == ord('q'):
