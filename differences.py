@@ -34,17 +34,23 @@ def map_colors(img, region_width, region_height):
     #loop though the image by regions
     for y in range(1, height - region_height, region_height):
         for x in range(1, width - region_width, region_width):
+
+            #map region to each pixel from range 0 - 180
+            pixel_count_map = {}
+            for i in range(0, 180, 2):
+                pixel_count_map[str(i) + '-' + str(i+1)] = get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (i, 0, 0), (i + 1, 255, 255))
+
             region_pixel_map.append({
                 'cords': {
                     'x': x,
                     'y': y
                 },
-                'map': {
-                    'black': get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (95, 0, 0), (97, 255, 255))
-                }
+                'map': pixel_count_map
+                # 'map': {
+                #     'black': get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (95, 0, 0), (97, 255, 255))
+                # }
             })
 
-    print(region_pixel_map)
     return region_pixel_map
 
 '''
@@ -105,12 +111,11 @@ def compare_regions(region_data1, region_data2, percetange_difference_allowed):
     region_pixels_with_significant_changes = []
 
     for i in range(len(region_data1)):
-        percentage_change_black = get_change(region_data1[i]['map']['black'], region_data2[i]['map']['black'] )
+        for key, value in region_data1[i]['map'].items():
+            percentage_change_black = get_change(region_data1[i]['map'][key], region_data2[i]['map'][key])
 
-        print(region_data1[i]['map']['black'], region_data2[i]['map']['black'],percentage_change_black)
-
-        if (percentage_change_black > percetange_difference_allowed and (region_data1[i]['map']['black'] > 100 or region_data2[i]['map']['black'] > 100)):
-            region_pixels_with_significant_changes.append(region_data1[i]['cords'])
+            if (percentage_change_black > percetange_difference_allowed and (region_data1[i]['map'][key] > 100 or region_data2[i]['map'][key] > 100)):
+                region_pixels_with_significant_changes.append(region_data1[i]['cords'])
 
     return region_pixels_with_significant_changes
 
