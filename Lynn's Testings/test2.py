@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-image1 = cv2.imread('../assets/PCB 1.JPG')
-image2 = cv2.imread('../assets/PCB 2.JPG')
+image1 = cv2.imread('./assets/PCB 1.JPG')
+image2 = cv2.imread('./assets/PCB 2.JPG')
 
 
 def splitYUV(img):
@@ -114,8 +114,8 @@ cv2.imwrite('./saved/pic2.jpg', cl2)
 # cv2.imshow('og2', og2)
 # cv2.imshow('difference', difference)
 
-cv2.imshow('cropped1', cl1)
-cv2.imshow('cropped2', cl2)
+# cv2.imshow('cropped1', cl1)
+# cv2.imshow('cropped2', cl2)
 
 # cv2.imshow('v', v2)
 # cv2.imshow('u', u)
