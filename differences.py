@@ -38,7 +38,14 @@ def map_colors(img, region_width, region_height):
             #map region to each pixel from range 0 - 180
             pixel_count_map = {}
             for i in range(0, 180, 2):
-                pixel_count_map[str(i) + '-' + str(i+1)] = get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (i, 0, 0), (i + 1, 255, 255))
+                pixel_count_map[str(i) + '-' + str(i+10)] = get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (i, 30, 0), (i + 1, 255, 255))
+
+            #add white regions
+            # pixel_count_map['white'] = get_region_color_count_for_specific_region(img, x, y,
+            #                                                                                          region_width,
+            #                                                                                          region_height,
+            #                                                                                          (0, 0, 0),
+            #                                                                                          (360, 2, 255))
 
             region_pixel_map.append({
                 'cords': {
@@ -107,14 +114,14 @@ def get_change(current, previous):
 Compare the given regions mapped to pixel color count
 if there sa certain percentage change between the two images, we can assume it is different
 '''
-def compare_regions(region_data1, region_data2, percetange_difference_allowed):
+def compare_regions(region_data1, region_data2, percetange_difference_allowed, min_pixel_count):
     region_pixels_with_significant_changes = []
 
     for i in range(len(region_data1)):
         for key, value in region_data1[i]['map'].items():
             percentage_change_black = get_change(region_data1[i]['map'][key], region_data2[i]['map'][key])
 
-            if (percentage_change_black > percetange_difference_allowed and (region_data1[i]['map'][key] > 100 or region_data2[i]['map'][key] > 100)):
+            if (percentage_change_black > percetange_difference_allowed and (region_data1[i]['map'][key] > min_pixel_count or region_data2[i]['map'][key] > min_pixel_count)):
                 region_pixels_with_significant_changes.append(region_data1[i]['cords'])
 
     return region_pixels_with_significant_changes
@@ -160,10 +167,10 @@ call all the sequences above
 @region_height: The width of the region
 @percetange_difference_allowed: The percentage of difference allowed for each color region between two regions
 '''
-def highligh_differences(img1, img2, region_width, region_height, percetange_difference_allowed):
+def highligh_differences(img1, img2, region_width, region_height, percetange_difference_allowed, min_pixel_count):
     data = map_colors(img1, region_width, region_height)
     data2 = map_colors(img2, region_width, region_height)
-    cords_with_most_changes = compare_regions(data, data2, percetange_difference_allowed)
+    cords_with_most_changes = compare_regions(data, data2, percetange_difference_allowed, min_pixel_count)
     img1_highlited, img2_highlighted = highlight_areas_for_given_cords(img1, img2, cords_with_most_changes, region_width, region_height)
 
     return img1_highlited, img2_highlighted
