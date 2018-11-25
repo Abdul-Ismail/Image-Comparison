@@ -1,4 +1,3 @@
-
 '''
 Given an array of bgr values or any format with 3 channels, it will return the average
 The average will be for each individual channel e.g bgr - all b values will be average together
@@ -13,7 +12,6 @@ def averageOfRGB(BGR_values, calculationType):
         b.append(bgr[0])
         g.append(bgr[1])
         r.append(bgr[2])
-
 
     if calculationType == 'avg':
         average = []
@@ -44,7 +42,6 @@ def remove(passedImage, amountOftimestoRemove, calculationType):
     img = passedImage.copy()
     img1 = passedImage.copy()
     averagedImg = passedImage.copy()
-
     height = img.shape[0]
     width = img.shape[1]
 
@@ -62,23 +59,12 @@ def remove(passedImage, amountOftimestoRemove, calculationType):
                                   img[y + 1, x + 1].tolist(), img[y + 1, x - 1].tolist(), img[y - 1, x + 1].tolist(), img[y - 1, x - 1].tolist()]
 
                     average = averageOfRGB(RGB_values, calculationType)
-
-                    # if average == False: break
-
-                    # if the pixel is not within the average value then assign it a bgr value of the average vgr value of the surrounding pixels
-                    # the range should be a region of the average
-                    # channelRange = 150
-                    # startRange = [average[0] - channelRange, average[1] - channelRange, average[2] - channelRange]
-                    # endRange = [average[0] + channelRange, average[1] + channelRange, average[2] + channelRange]
-                    # if (img[y, x].tolist() > startRange and img[y, x].tolist() < endRange):
-                    #     img1[y, x] = [0, 0, 255]
-                    #     img2[y, x] = average
-
                     img1[y, x] = [0, 0, 255]
                     averagedImg[y, x] = average
 
         img = averagedImg
         if (i != amountOftimestoRemove - 1): img1 = orignal
+
 
     return img1, averagedImg
 
@@ -105,9 +91,7 @@ def smoothImage(passedImage, amountOftimestoCalculate, calculationType):
                               img[y - 2, x - 2].tolist(), img[y - 2, x - 1].tolist(), img[y - 2, x].tolist(),
                               img[y - 2, x + 1].tolist(), img[y - 2, x + 2].tolist(),
                               img[y, x + 2].tolist(), img[y + 1, x + 2].tolist(), img[y + 2, x + 2].tolist(),
-                              img[y - 1, x + 2].tolist(), img[y - 2, x + 2].tolist()
-
-                              ]
+                              img[y - 1, x + 2].tolist(), img[y - 2, x + 2].tolist()]
 
                 average = averageOfRGB(RGB_values, calculationType)
                 averagedImg[y, x] = average
