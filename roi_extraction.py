@@ -84,12 +84,12 @@ def scaleImage(img):
 
 def crop_roi(img):
     img = img.copy()
-    img = scaleImage(img)
+    # img = scaleImage(img)
     v = splitYUV(img.copy())
     V = removeFlash(v)
     bottom1, top1, left1, right1 = cropImage(v)
     image1_cropped = img[bottom1 - 50:top1 + 50, left1 - 50:right1 + 50]
-    return image1_cropped
+    return image1_cropped, {'y': bottom1 - 50, 'x': left1 - 50}
 
 
 def crop_roi_flash_removed(img):

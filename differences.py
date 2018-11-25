@@ -91,9 +91,10 @@ def compare_regions(region_data1, region_data2, percetange_difference_allowed, m
 '''
 highlight cords for given list of x and y and the region width and height
 '''
-def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_height):
+def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_height, image1_cropped_cords, image2_cropped_cords):
     img1_overlay = img1.copy()
     img2_overlay = img2.copy()
+
 
 
     for cord in cords:
@@ -101,11 +102,23 @@ def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_heig
         # img2[cord['y']:cord['y'] + region_height, cord['x']:cord['x'] + region_width] = 0
         # cv2.rectangle(img1, (cord['x'] - region_width, cord['y'] - region_height), (cord['x'] - region_width, cord['y'] + region_height), (0, 0, 255), -1)
 
-        cv2.rectangle(img=img1_overlay, pt1=(cord['x'], cord['y'] ), pt2=(cord['x'] + ( int(region_width)), cord['y'] + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
-        cv2.rectangle(img=img2_overlay, pt1=(cord['x'], cord['y'] ), pt2=(cord['x'] + ( int(region_width)), cord['y'] + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
+
+        x1 = image1_cropped_cords['x'] + cord['x']
+        y1 = image1_cropped_cords['y'] + cord['y']
+
+        x2 = image2_cropped_cords['x'] + cord['x']
+        y2 = image2_cropped_cords['y'] + cord['y']
+
+        # x1 = cord['x']
+        # y1 = cord['y']
+        #
+        # x2 = cord['x']
+        # y2 = cord['y']
 
 
-        # cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
+        cv2.rectangle(img=img1_overlay, pt1=(x1, y1 ), pt2=(x1 + (int(region_width) ), y1 + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
+        cv2.rectangle(img=img2_overlay, pt1=(x2, y2 ), pt2=(x2 + (int(region_width) ), y2 + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
+
 
     opacity = 0.4
     cv2.addWeighted(img1_overlay, opacity, img1, 1 - opacity, 0, img1)
@@ -123,11 +136,11 @@ call all the sequences above
 @region_height: The width of the region
 @percetange_difference_allowed: The percentage of difference allowed for each color region between two regions
 '''
-def highligh_differences(img1, img2, region_width, region_height, percetange_difference_allowed, min_pixel_count):
+def highligh_differences(img1, img2, region_width, region_height, percetange_difference_allowed, min_pixel_count, image1_cropped_cords, image2_cropped_cords, img1_original, img2_original):
     data = map_colors(img1, region_width, region_height)
     data2 = map_colors(img2, region_width, region_height)
     cords_with_most_changes = compare_regions(data, data2, percetange_difference_allowed, min_pixel_count)
-    img1_highlited, img2_highlighted = highlight_areas_for_given_cords(img1, img2, cords_with_most_changes, region_width, region_height)
+    img1_highlited, img2_highlighted = highlight_areas_for_given_cords( img1_original, img2_original,  cords_with_most_changes, region_width, region_height, image1_cropped_cords, image2_cropped_cords)
 
     return img1_highlited, img2_highlighted
 
