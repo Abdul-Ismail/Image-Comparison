@@ -128,7 +128,7 @@ def highligh_differences(img1, img2, region_width, region_height, percetange_dif
     data = map_colors(img1, region_width, region_height)
     data2 = map_colors(img2, region_width, region_height)
     cords_with_most_changes = compare_regions(data, data2, percetange_difference_allowed, min_pixel_count)
-    img1_highlited, img2_highlighted = highlight_areas_for_given_cords( img1_original, img2_original,  cords_with_most_changes, region_width, region_height, image1_cropped_cords, image2_cropped_cords)
+    img1_highlited, img2_highlighted = highlight_areas_for_given_cords(img1_original, img2_original,  cords_with_most_changes, region_width, region_height, image1_cropped_cords, image2_cropped_cords)
 
     return img1_highlited, img2_highlighted
 

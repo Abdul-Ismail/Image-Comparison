@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 import removeFlash
 
-image1 = cv2.imread('./assets/fifa1.jpg')
-image2 = cv2.imread('./assets/fifa2.jpg')
+image1 = cv2.imread('./assets/chalk1_position.jpg')
+image2 = cv2.imread('./assets/chalk2.jpg')
 
 
 
