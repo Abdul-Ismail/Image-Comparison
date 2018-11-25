@@ -32,8 +32,8 @@ def map_colors(img, region_width, region_height):
     width = img.shape[1]
 
     #loop though the image by regions
-    for y in range(1, height - region_height, region_height):
-        for x in range(1, width - region_width, region_width):
+    for y in range(region_height + 1, height - region_height, region_height):
+        for x in range(region_width + 1, width - region_width, region_width):
 
             #map region to each pixel from range 0 - 180
             pixel_count_map = {}
@@ -92,9 +92,25 @@ def compare_regions(region_data1, region_data2, percetange_difference_allowed, m
 highlight cords for given list of x and y and the region width and height
 '''
 def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_height):
+    img1_overlay = img1.copy()
+    img2_overlay = img2.copy()
+
+
     for cord in cords:
-        img1[cord['y']:cord['y'] + region_height, cord['x']:cord['x'] + region_width] = 0
-        img2[cord['y']:cord['y'] + region_height, cord['x']:cord['x'] + region_width] = 0
+        # img1[cord['y']:cord['y'] + region_height, cord['x']:cord['x'] + region_width] = 0
+        # img2[cord['y']:cord['y'] + region_height, cord['x']:cord['x'] + region_width] = 0
+        # cv2.rectangle(img1, (cord['x'] - region_width, cord['y'] - region_height), (cord['x'] - region_width, cord['y'] + region_height), (0, 0, 255), -1)
+
+        cv2.rectangle(img=img1_overlay, pt1=(cord['x'], cord['y'] ), pt2=(cord['x'] + ( int(region_width)), cord['y'] + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
+        cv2.rectangle(img=img2_overlay, pt1=(cord['x'], cord['y'] ), pt2=(cord['x'] + ( int(region_width)), cord['y'] + (int(region_height)) ), color=(0, 0, 255), thickness=-1)
+
+
+        # cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
+
+    opacity = 0.4
+    cv2.addWeighted(img1_overlay, opacity, img1, 1 - opacity, 0, img1)
+    cv2.addWeighted(img2_overlay, opacity, img2, 1 - opacity, 0, img2)
+
 
     return img1, img2
 
