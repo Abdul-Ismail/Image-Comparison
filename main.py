@@ -23,11 +23,9 @@ image2 = scaleImage(image2)
 red, image1 = removeFlash.remove(image1, 1, 'avg')
 red, image2 = removeFlash.remove(image2, 1, 'avg')
 
-
 image1_roi, image1_cropped_cords = roi_extraction.crop_roi(image1)
 image2_roi, image2_cropped_cords = roi_extraction.crop_roi(image2)
 
-print(image1_cropped_cords, image2_cropped_cords)
 
 highlighted_difference_image1, highlighted_difference_image2 = differences.highligh_differences(image1_roi.copy(), image2_roi.copy(), 60, 60, 95, 150, image1_cropped_cords, image2_cropped_cords, image1.copy(), image2.copy())
 cv2.imshow('image1_roi', image1_roi)
