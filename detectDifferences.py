@@ -1,6 +1,7 @@
 '''
 Title: Finding difference between two images
 
+
 Group members:
   - Thuy Nguyen
   - Ronalds Upenieks
@@ -11,11 +12,10 @@ Project Objective:
     The objective of this project is to take two images and highlight any differences that the image have
 
 Challenges:
-    - The solution has to be desgined in a way that it could deal with objects from each images being location in different parts of the image
+    - The solution has to be designed in a way that it could deal with objects from each images being location in different parts of the image
     - Flash present on images which does not equate to a difference in the image
     - Scale of the image
     - Lighting in the image
-    - Rotation of object in the image
 
 
 Step by step to our solution:
@@ -26,26 +26,28 @@ Step by step to our solution:
     3 - Map each region in the image to the occurrences of a range of HSV colors
     4 - compare the mapped regions from both images get coordinates of any regions that have a difference in mapped values.
     5 - Highlight the regions that have changed
+
 '''
 
 
 import cv2
 import numpy as np
 
-image1 = cv2.imread('./assets/chalk1_position.jpg')
-image2 = cv2.imread('./assets/chalk2.jpg')
+image1 = cv2.imread('./assets/PCB 1.jpg')
+image2 = cv2.imread('./assets/PCB 2.jpg')
 
 region_width = 60
 region_height = 60
 percetange_difference_allowed = 95
 min_pixel_count = 150
 
-
+'''
+Scale image to 860x720
+@img: The image to scale
+'''
 def scaleImage(img):
-    image2 = cv2.imread('./assets/PCB 2.JPG')
-    height = image2.shape[0]
-    width = image2.shape[1]
-
+    width = 860
+    height = 720
     return cv2.resize(img, dsize=(width, height))
 
 
