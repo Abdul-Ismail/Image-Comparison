@@ -41,11 +41,7 @@ def map_colors(img, region_width, region_height):
                 pixel_count_map[str(i) + '-' + str(i+10)] = get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (i, 30, 0), (i + 1, 255, 255))
 
             #add white regions
-            # pixel_count_map['white'] = get_region_color_count_for_specific_region(img, x, y,
-            #                                                                                          region_width,
-            #                                                                                          region_height,
-            #                                                                                          (0, 0, 0),
-            #                                                                                          (360, 2, 255))
+            # pixel_count_map['white'] = get_region_color_count_for_specific_region(img, x, y, region_width, region_height, (0, 0, 0), (360, 2, 255))
 
             region_pixel_map.append({
                 'cords': {
@@ -95,8 +91,6 @@ def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_heig
     img1_overlay = img1.copy()
     img2_overlay = img2.copy()
 
-
-
     for cord in cords:
         x1 = image1_cropped_cords['x'] + cord['x']
         y1 = image1_cropped_cords['y'] + cord['y']
@@ -123,6 +117,10 @@ call all the sequences above
 @region_width: The height of the region
 @region_height: The width of the region
 @percetange_difference_allowed: The percentage of difference allowed for each color region between two regions
+@img1_original: The original scaled image1, highlight is performed on this image
+@img2_original: The original scaled image2, highlight is performed on this image
+@image1_cropped_cords: x and y cords to where image1 was cropped at
+@image2_cropped_cords: x and y cords to where image2 was cropped at
 '''
 def highligh_differences(img1, img2, region_width, region_height, percetange_difference_allowed, min_pixel_count, image1_cropped_cords, image2_cropped_cords, img1_original, img2_original):
     data = map_colors(img1, region_width, region_height)
