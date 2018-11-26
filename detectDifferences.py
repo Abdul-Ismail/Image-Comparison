@@ -1,3 +1,34 @@
+'''
+Title: Finding difference between two images
+
+Group members:
+  - Thuy Nguyen
+  - Ronalds Upenieks
+  - Abdulaziz Ismail
+
+
+Project Objective:
+    The objective of this project is to take two images and highlight any differences that the image have
+
+Challenges:
+    - The solution has to be desgined in a way that it could deal with objects from each images being location in different parts of the image
+    - Flash present on images which does not equate to a difference in the image
+    - Scale of the image
+    - Lighting in the image
+    - Rotation of object in the image
+
+
+Step by step to our solution:
+    1 - Extracting the ROI. We needed to crop out the image and only include the ROI. This helped deal with issues where the
+        object in the image is located in different positions
+    2 - Removing the flash. This was done by detecting while pixels in comparison to their neighbors and then detected pixels
+        are blended in with their neighbours
+    3 - Map each region in the image to the occurrences of a range of HSV colors
+    4 - compare the mapped regions from both images get coordinates of any regions that have a difference in mapped values.
+    5 - Highlight the regions that have changed
+'''
+
+
 import cv2
 import numpy as np
 
