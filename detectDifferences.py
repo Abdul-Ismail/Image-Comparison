@@ -20,12 +20,13 @@ Challenges:
 
 Step by step to our solution:
     1 - Extracting the ROI. We needed to crop out the image and only include the ROI. This helped deal with issues where the
-        object in the image is located in different positions
+        object in the image is located in different positions. ROI cropped by detecting pixel value differences in comparison to
+        the background.
     2 - Removing the flash. This was done by detecting while pixels in comparison to their neighbors and then detected pixels
         are blended in with their neighbours
     3 - Map each region in the image to the occurrences of a range of HSV colors
     4 - compare the mapped regions from both images get coordinates of any regions that have a difference in mapped values.
-    5 - Highlight the regions that have changed
+    5 - Highlight the regions that have changed using the coordinates from the above step
 
 '''
 
@@ -218,6 +219,8 @@ def map_colors(img, region_width, region_height):
 
 '''
 get percentage change of 2 given values
+@current: Current value thats being compared
+@Previous: Previous value thats being compared
 '''
 def get_change(current, previous):
     diff = abs(current - previous)
