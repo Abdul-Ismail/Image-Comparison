@@ -10,7 +10,11 @@ Group members:
 
 
 Project Objective:
-    The objective of this project is to take two images and highlight any differences that the image have
+    The objective of this project is to take two images and highlight any differences that the image have.
+    The solution should be able to spot the difference between two photographed images. The images
+    can have the objects positioned at different areas in the image e.g object in image-a can be in the center
+    and the object in image-b cna be at the top left corner.
+    Images do not have to have the same lighting conditions e.g flash or shadow can be present in one or both of the images.
 
 Challenges:
     - The solution has to be designed in a way that it could deal with objects from each images being location in different parts of the image
@@ -24,13 +28,33 @@ Step by step to our solution:
         object in the image is located in different positions. ROI cropped by detecting pixel value differences in comparison to
         the background.
     2 - Removing the flash. This was done by detecting while pixels in comparison to their neighbors and then detected pixels
-        are blended in with their neighbours
+        are blended in with their neighbours. To blend the pixel in with their neighbours we get the average pixel value
+        of all the neighbor pixels.
     3 - Map each region in the image to the occurrences of a range of HSV colors. HSV color range is used as it helps us
-        deal with flash and lighting issues such as shadow because we can simply ignore those factors by have a threshold
-        on the saturation and value.
-    4 - compare the mapped regions from both images get coordinates of any regions that have a difference in mapped values.
-    5 - Highlight the regions that have changed using the coordinates from the above step
-
+        deal with flash and lighting issues such as shadow because we can simply ignore those factors by having a threshold
+        on the saturation and value. HSV allowed us to pick a color based on the HUE and then we were able to adjust
+        the saturation value and the value/brightness value.
+    4 - compare the mapped regions from both images and return coordinates of any regions that have a difference in mapped values.
+        The way this comparasion is done is that each region has an occurrence amount for a given pixel range, if any of these
+        occurrences differ to the region from another image then we can consider it to be a difference. To deal with issues such that
+        there might be small amount of pixel difference that does not necessarily equate to a difference we have a threshold on
+        what the difference should be. We place a 95% threshold, if the difference between both values is greater than 95% then we
+        can consider the regions to be different.
+        Another issue that arises from this algortihm is that there tends to be some pixels in regions that are different, but these pixels
+        don't equate to any differecnes and usually it is a small amount, e.g a region can have 1 or 2 pixel value that another region does not
+        have, this is a 100% difference compared to the other region which does not have any occurrences of this pixex but its not a change. To deal
+        with this issue we places a threshold/minimum amount of pixels that should be present before considering it to be a changed region.
+    5 - Highlight the regions that have changed using the coordinates from the above step. To highlight each region we simply
+        use the coordinate from above and use that coordinate to draw a rectangle thats filled. WE then add a weight to the images
+        to allow for the transparency look, this is done by using the built in function of opencv addWeighted.
+        Up to this point everything was done on the cropped image, step 5 is done on the original image as we want the highlighted
+        parts to be done in the original image. Since the coordinate for the region we have is of the cropped image we need to
+        map this value to the original image which is a bigger size. e.g a region change at coordinate (5, 10) will not be the
+        same region in the original image as the cropped images could have been of the center of the original image. To deal with
+        this we had the x and y points of where the original image was cropped from. We then use the cropped coordinates x and y and add
+        coordinate of the region coordinate to map the region in the cropped coordinate to the region in the orignal image.
+        e,g if image-a was cropped at x=50 and y=50 and the cropped image has a change located at x=10 and y=5 then the change
+        in the original image would be at x=50+10 and y=50+5.
 '''
 
 
