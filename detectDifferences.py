@@ -121,12 +121,14 @@ def removeFlash(passedImage, amountOftimestoRemove, calculationType):
     return img1, averagedImg
 
 
+#split image into YUV channel and return v channel
 def splitYUV(img):
     YUV = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
     y, u, v = cv2.split(YUV)
     return v
 
 
+#crop image based on darkest pixel compared to the background
 def cropImage(img):
     height = img.shape[0]
     width = img.shape[1]
@@ -153,33 +155,7 @@ def cropImage(img):
     return bottom, top, left, right
 
 
-def makePixelsDarker(img):
-    height = img.shape[0]
-    width = img.shape[1]
-
-    for y in range(0, height):
-        for x in range(0, width):
-
-            if np.any(img[y, x] < 100):
-                img[y, x] = img[y, x] - 20
-
-            # if np.any(img[y, x] > 230):
-            #     img[y, x] = 255
-    return img
-
-
-def compare(img1, img2):
-    height = img1.shape[0]
-    width = img1.shape[1]
-
-    for y in range(0, width, 30):
-        for x in range(0, height, 30):
-            if (img1[x:x+30, y:y+30].mean() > (img2[x:x+30, y:y+30].mean() + 30))or (img1[x:x+30, y:y+30].mean() < (img2[x:x+30, y:y+30].mean() - 30)):
-                img1[x:x + 30, y:y + 30] = 0
-    return img1
-
-
-
+#crop the roi
 def crop_roi(img):
     img = img.copy()
     v = splitYUV(img.copy())
@@ -294,7 +270,6 @@ def highlight_areas_for_given_cords(img1, img2, cords, region_width, region_heig
 
 
     return img1, img2
-
 
 
 #scale the image
