@@ -35,13 +35,13 @@ Step by step to our solution:
         on the saturation and value. HSV allowed us to pick a color based on the HUE and then we were able to adjust
         the saturation value and the value/brightness value.
     4 - compare the mapped regions from both images and return coordinates of any regions that have a difference in mapped values.
-        The way this comparasion is done is that each region has an occurrence amount for a given pixel range, if any of these
+        The way this comparison is done is that each region has an occurrence amount for a given pixel range, if any of these
         occurrences differ to the region from another image then we can consider it to be a difference. To deal with issues such that
         there might be small amount of pixel difference that does not necessarily equate to a difference we have a threshold on
         what the difference should be. We place a 95% threshold, if the difference between both values is greater than 95% then we
         can consider the regions to be different.
-        Another issue that arises from this algortihm is that there tends to be some pixels in regions that are different, but these pixels
-        don't equate to any differecnes and usually it is a small amount, e.g a region can have 1 or 2 pixel value that another region does not
+        Another issue that arises from this algorithm is that there tends to be some pixels in regions that are different, but these pixels
+        don't equate to any differences and usually it is a small amount, e.g a region can have 1 or 2 pixel value that another region does not
         have, this is a 100% difference compared to the other region which does not have any occurrences of this pixex but its not a change. To deal
         with this issue we places a threshold/minimum amount of pixels that should be present before considering it to be a changed region.
     5 - Highlight the regions that have changed using the coordinates from the above step. To highlight each region we simply
@@ -205,9 +205,8 @@ Will return the number of pixels for a region of color
 '''
 def get_region_color_count_for_specific_region(img, x, y, region_width, region_height, lower_region, upper_region):
     roi = img[y:y + region_height, x:x + region_width]
-    inRange_of_lower_and_ipper = cv2.inRange(roi, lower_region, upper_region)
-    pixelCount = np.count_nonzero(inRange_of_lower_and_ipper == 255)
-    # print(pixelCount)
+    inRange_of_lower_and_upper = cv2.inRange(roi, lower_region, upper_region)
+    pixelCount = np.count_nonzero(inRange_of_lower_and_upper == 255)
     return pixelCount
 
 
