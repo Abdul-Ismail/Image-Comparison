@@ -1,4 +1,5 @@
 '''
+***************** NOTE: RUN WITH PYTHON 3 *****************
 Title: Finding difference between two images
 
 
@@ -24,7 +25,9 @@ Step by step to our solution:
         the background.
     2 - Removing the flash. This was done by detecting while pixels in comparison to their neighbors and then detected pixels
         are blended in with their neighbours
-    3 - Map each region in the image to the occurrences of a range of HSV colors
+    3 - Map each region in the image to the occurrences of a range of HSV colors. HSV color range is used as it helps us
+        deal with flash and lighting issues such as shadow because we can simply ignore those factors by have a threshold
+        on the saturation and value.
     4 - compare the mapped regions from both images get coordinates of any regions that have a difference in mapped values.
     5 - Highlight the regions that have changed using the coordinates from the above step
 
