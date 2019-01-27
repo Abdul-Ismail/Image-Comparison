@@ -1,4 +1,4 @@
-# image-comparasion
+# Image Comparasion
 Finding and highlighting the areas that are difference between 2 images (images can be of different size)
 The objective of this project is to take two images and highlight any differences that the image have. The solution should be able to spot the difference between two photographed images, of different scale, positioning, rotation and lighting.
 
